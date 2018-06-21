@@ -1,0 +1,11 @@
+{
+  "name": "library-template",
+  "version": "1.0.0",
+  "description": "javascript library template",
+  "main": "meta.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "myron.liu",
+  "license": "MIT"
+}
