@@ -26,37 +26,43 @@ const plugins = [
     ]
   })
 ];
-export default [{
-  input: 'src/index.js',
-  output: [{
-    banner,
-    file: `dist/${name}.common.js`,
-    format: 'cjs'
-  }, {
-    banner,
-    file: `dist/${name}.esm.js`,
-    format: 'es'
-  }],
-  plugins: [
-    ...plugins,
-    postcss({ extensions: ['.less'], extract: `dist/${name}.css` }),
-  ],
-  external: ['vue']
-}, {
-  input: 'src/umd.js',
-  output: {
-    banner,
-    file: `dist/${name}.js`,
-    format: 'umd',
-    globals: {
-      vue: 'Vue'
-    },
-    name: '{{globalName}}'
+export default [
+  {
+    input: 'src/index.js',
+    output: [
+      {
+        banner,
+        file: `dist/${name}.common.js`,
+        format: 'cjs'
+      },
+      {
+        banner,
+        file: `dist/${name}.esm.js`,
+        format: 'es'
+      }
+    ],
+    plugins: [
+      postcss({ extensions: ['.less'], extract: `dist/${name}.css` }),
+      ...plugins
+    ],
+    external: ['vue']
   },
-  plugins: [
-    ...plugins,
-    postcss({ extensions: ['.less'], extract: `dist/${name}.all.css` }),
-    uglify()
-  ],
-  external: ['vue']
-}];
+  {
+    input: 'src/umd.js',
+    output: {
+      banner,
+      file: `dist/${name}.js`,
+      format: 'umd',
+      globals: {
+        vue: 'Vue'
+      },
+      name: '{{globalName}}'
+    },
+    plugins: [
+      postcss({ extensions: ['.less'], extract: `dist/${name}.all.css` }),
+      ...plugins,
+      uglify()
+    ],
+    external: ['vue']
+  }
+];
