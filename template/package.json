@@ -7,6 +7,12 @@
   "module": "dist/{{ name }}.esm.js",
   "unpkg": "dist/{{ name }}.js",
   "jsdelivr": "dist/{{ name }}.js",
+  "typings": "types/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "types"
+  ],
   "directories": {
     "test": "test"
   },
@@ -15,7 +21,7 @@
     "dev": "NODE_ENV=development parcel demo/index.html",
     "lint": "eslint --ext .js src",
     "test:coverage": "NODE_ENV=test jest -i --coverage",
-    "build": "rm -rf dist && NODE_ENV=module rollup --config rollup.config.js &&  NODE_ENV=production rollup --config rollup.config.js"
+    "build": "rm -rf dist && rollup --config rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -57,30 +63,5 @@
     "rollup-plugin-uglify": "^4.0.0",
     "vue": "^2.5.16",
     "vue-jest": "^2.6.0"
-  },
-  "jest": {
-    "verbose": false,
-    "roots": [
-      "<rootDir>/test"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "vue"
-    ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "transform": {
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
-      "\\.(less)$": "<rootDir>/node_modules/jest-css-modules",
-      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules",
-      ".*\\.(vue|js)$": "<rootDir>/node_modules/babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!vue-router)"
-    ],
-    "snapshotSerializers": [
-      "jest-serializer-html"
-    ]
   }
 }

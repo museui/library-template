@@ -7,9 +7,7 @@ import packageJson from './package.json';
 
 const name = packageJson.name;
 const banner = `/* ${name} myron.liu version ${packageJson.version} */`;
-const env = process.env.NODE_ENV;
 const plugins = [
-  postcss({ extensions: ['.less'], extract: `dist/${name}${env === 'production' ? '.all' : ''}.css` }),
   resolve({ jsnext: true, main: true, browser: true }),
   commonjs(),
   babel({
@@ -28,40 +26,37 @@ const plugins = [
     ]
   })
 ];
-const external = ['vue'];
-const output = [];
-let input = 'src/index.js';
-
-switch (env) {
-  case 'module':
-    output.push({
-      banner,
-      file: `dist/${name}.common.js`,
-      format: 'cjs'
-    });
-    output.push({
-      banner,
-      file: `dist/${name}.esm.js`,
-      format: 'es'
-    });
-    break;
-  case 'production':
-    output.push({
-      banner,
-      file: `dist/${name}.js`,
-      format: 'umd',
-      globals: {
-        vue: 'Vue'
-      },
-      name: '{{globalName}}'
-    });
-    plugins.push(uglify());
-    break;
-}
-
-export default {
-  input,
-  output,
-  plugins,
-  external
-};
+export default [{
+  input: 'src/index.js',
+  output: [{
+    banner,
+    file: `dist/${name}.common.js`,
+    format: 'cjs'
+  }, {
+    banner,
+    file: `dist/${name}.esm.js`,
+    format: 'es'
+  }],
+  plugins: [
+    ...plugins,
+    postcss({ extensions: ['.less'], extract: `dist/${name}.css` }),
+  ],
+  external: ['vue']
+}, {
+  input: 'src/umd.js',
+  output: {
+    banner,
+    file: `dist/${name}.js`,
+    format: 'umd',
+    globals: {
+      vue: 'Vue'
+    },
+    name: '{{globalName}}'
+  },
+  plugins: [
+    ...plugins,
+    postcss({ extensions: ['.less'], extract: `dist/${name}.all.css` }),
+    uglify()
+  ],
+  external: ['vue']
+}];
