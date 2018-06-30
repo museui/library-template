@@ -52,6 +52,7 @@
     "jest-css-modules": "^1.1.0",
     "jest-serializer-html": "^5.0.0",
     "less": "^3.0.4",
+    "muse-ui": "^3.0.0-rc.4",
     "parcel-bundler": "1.7.1",
     "parcel-plugin-vue": "^1.5.0",
     "postcss-modules": "^1.1.0",
