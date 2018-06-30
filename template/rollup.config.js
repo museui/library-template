@@ -3,6 +3,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import { uglify } from 'rollup-plugin-uglify';
 import postcss from 'rollup-plugin-postcss';
+import replace from 'rollup-plugin-replace';
 import packageJson from './package.json';
 
 const name = packageJson.name;
@@ -12,7 +13,10 @@ const plugins = [
   commonjs(),
   babel({
     babelrc: false,
-    include: 'src/**',
+    include: [
+      'src/**',
+      'node_modules/muse-ui/src/**'
+    ],
     runtimeHelpers: false,
     presets: [
       [
@@ -24,6 +28,9 @@ const plugins = [
       'stage-2',
       'es2015-rollup'
     ]
+  }),
+  replace({
+    __VERSION__: version
   })
 ];
 export default [
