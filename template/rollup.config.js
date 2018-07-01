@@ -7,7 +7,8 @@ import replace from 'rollup-plugin-replace';
 import packageJson from './package.json';
 
 const name = packageJson.name;
-const banner = `/* ${name} myron.liu version ${packageJson.version} */`;
+const version = packageJson.version;
+const banner = `/* ${name} myron.liu version ${version} */`;
 const plugins = [
   resolve({ jsnext: true, main: true, browser: true }),
   commonjs(),
